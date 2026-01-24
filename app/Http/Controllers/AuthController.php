@@ -26,7 +26,7 @@ class AuthController extends Controller
 
         $token = $user->createToken('auth_token')->plainTextToken;
 
-        return response()->json(['token' => $tkon], 201);
+        return response()->json(['token' => $token], 201);
     }
 
     public function login(Request $request)
@@ -38,13 +38,13 @@ class AuthController extends Controller
 
         $user = User::where('email', $request->email)->first();
 
-        if(!user || !Hash::check($request->password, $user->password)) {
+        if (!$user || !Hash::check($request->password, $user->password)) {
             throw ValidationException::withMessages([
-                'email' => ['The provided credentials are incorrect'],
+                'email' => ['The provided credentials are incorrect.'],
             ]);
         }
 
-        $token = $user->createToken('atuh_token')->plaintextToken;
+        $token = $user->createToken('auth_token')->plainTextToken;
 
         return response()->json(['token' => $token]);
     }
