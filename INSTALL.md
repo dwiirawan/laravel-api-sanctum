@@ -49,3 +49,14 @@ Membuat API dengan Authentication Sanctum
 2. Membuat Controller AuthController
 
 3. Membungkus Categories CRUD dalam Middleware Auth
+
+4. Exception Unuathorize
+   ->withExceptions(function (Exceptions $exceptions) {
+        $exceptions->render(function(\Illuminate\Auth\AuthenticationException $e, Request $request) {
+            if ($request->is('api/*')) {
+                return response()->json([
+                    'message' => 'Unauthorize'
+                ], 401);
+            }
+        });
+    })
